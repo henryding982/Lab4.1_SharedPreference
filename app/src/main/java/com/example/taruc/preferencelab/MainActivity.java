@@ -10,9 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private EditText editTextName;
+    private ImageView imageView;
     private SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.pref_file),MODE_PRIVATE);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        editTextName = findViewById(R.id.editTextName);
 
     }
 
@@ -52,7 +55,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        String name;
 
+        int gender; // -1 default, 1 = Male and 0 = Female
+
+        name = sharedPreferences.getString("name", "");
+        gender = sharedPreferences.getInt("gender", -1);
+        editTextName.setText(name);
+
+        if (gender == 1) {
+            imageView.setImageResource(R.drawable.male);
+        }
+        else if (gender == 0)
+        {
+            imageView.setImageResource(R.drawable.female);
+        }
+        else
+        {
+            imageView.setImageResource(R.drawable.profile);
+        }
 
     }
 }
